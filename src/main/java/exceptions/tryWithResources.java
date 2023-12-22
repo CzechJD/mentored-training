@@ -24,6 +24,7 @@ public class tryWithResources {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Укажите путь к файлу, из которого нужно копировать данные: ");
             String copyFromFile = scanner.nextLine();
+
             bufferedWriter.write(readFile(copyFromFile));
         } catch (FileNotFoundException exception) {
             throw new RuntimeException("Не удалось записать файл :(");
