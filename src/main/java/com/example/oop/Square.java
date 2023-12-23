@@ -1,9 +1,10 @@
 package com.example.oop;
 
 public class Square extends Rectangle {
-    private double side;
+    private final double side;
 
     public Square(double side) {
+        super(side, side);
         if (side <= 0) {
             throw new IllegalArgumentException("Стороны квадрата должны быть больше 0");
         }
@@ -11,10 +12,10 @@ public class Square extends Rectangle {
     }
 
     public double getArea() {
-        return side * side;
+        return super.getArea();
     }
 
     public double getPerimeter() {
-        return side * 4;
+        return super.getArea();
     }
 }

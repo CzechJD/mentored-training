@@ -1,9 +1,10 @@
 package com.example.oop;
 
 public class Circle extends Ellipse {
-    private double radius;
+    private final double radius;
 
     public Circle(double radius) {
+        super(radius, radius);
         if (radius <= 0) {
             throw new IllegalArgumentException("Радиус должен быть больше 0");
         }
@@ -11,7 +12,7 @@ public class Circle extends Ellipse {
     }
 
     public double getArea() {
-        return Math.pow(radius, 2) * Math.PI;
+        return super.getArea();
     }
 
     public double getPerimeter() {

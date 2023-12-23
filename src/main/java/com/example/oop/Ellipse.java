@@ -1,13 +1,11 @@
 package com.example.oop;
 
 public class Ellipse extends Shape {
-    private double majorAxis;
-    private double minorAxis;
-
-    public Ellipse() {
-    }
+    private final double majorAxis;
+    private final double minorAxis;
 
     public Ellipse(double majorAxis, double minorAxis) {
+        super();
         if (majorAxis <= 0 || minorAxis <= 0) {
             throw new IllegalArgumentException("Полуоси эллипса должны быть больше 0");
         }
