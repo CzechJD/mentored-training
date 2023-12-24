@@ -1,6 +1,6 @@
 package com.example.exceptions;
 
-public class exceptionBasics {
+public class ExceptionBasics {
     public static void main(String[] args) {
         try {
             int[] array = {1, 4, 7, 10};

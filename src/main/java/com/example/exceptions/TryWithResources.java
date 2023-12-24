@@ -1,9 +1,16 @@
 package com.example.exceptions;
 
 import java.io.*;
-import java.util.Scanner;
 
-public class tryWithResources {
+public class TryWithResources {
+    public static void main(String[] args) {
+        String sourceFile = "src/main/resources/exceptions/source.txt";
+        writeInFile("Создался новый файл. Пуффф... Магия)))");
+
+        String file = readFile(sourceFile);
+        System.out.println(file);
+    }
+
     public static String readFile(String pathToFile) {
         StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToFile))) {
@@ -19,15 +26,10 @@ public class tryWithResources {
         return String.valueOf(stringBuilder);
     }
 
-    public static void writeInFile(String createFile) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(createFile))) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Укажите путь к файлу, из которого нужно копировать данные: ");
-            String copyFromFile = scanner.nextLine();
-
-            bufferedWriter.write(readFile(copyFromFile));
-        } catch (FileNotFoundException exception) {
-            throw new RuntimeException("Не удалось записать файл :(");
+    public static void writeInFile(String text) {
+        String destinationFile = "src/main/resources/exceptions/destination.txt";
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(destinationFile))) {
+            bufferedWriter.write(text);
         } catch (IOException exception) {
             throw new RuntimeException("Хьюстон, у нас проблемы...");
         }
