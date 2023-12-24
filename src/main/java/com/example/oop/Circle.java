@@ -10,11 +10,6 @@ public class Circle extends Ellipse {
         }
         this.radius = radius;
     }
-
-    public double getArea() {
-        return super.getArea();
-    }
-
     public double getPerimeter() {
         return 2 * (Math.PI * radius);
     }

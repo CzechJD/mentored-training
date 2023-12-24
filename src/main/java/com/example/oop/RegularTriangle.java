@@ -10,12 +10,4 @@ public class RegularTriangle extends Triangle {
         }
         this.side = side;
     }
-
-    public double getArea() {
-        return super.getArea();
-    }
-
-    public double getPerimeter() {
-        return super.getPerimeter();
-    }
 }
