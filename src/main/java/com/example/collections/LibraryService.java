@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LibraryService {
-    private final HashMap<Long, Book> books; // Список всех книг по id
-    private final HashMap<Long, User> users; // Список всех пользователей по id
-    private final HashMap<Long, Boolean> isBookTaken; // список свободных книг
+    private final HashMap<Long, Book> books;
+    private final HashMap<Long, User> users;
+    private final HashMap<Long, Boolean> isBookTaken;
     private final HashMap<Long, ArrayList<Book>> userBorrowedBooks;
 
     public LibraryService() {
@@ -24,7 +24,7 @@ public class LibraryService {
     }
 
     public ArrayList<Book> getAllAvailableBooks() {
-        ArrayList<Book> availableBooks = new ArrayList<>(); // создаём список доступных книг
+        ArrayList<Book> availableBooks = new ArrayList<>();
         for (Map.Entry<Long, Book> bookEntry : books.entrySet()) {
             if (!isBookTaken.getOrDefault(bookEntry.getKey(), false)) {
                 isBookTaken.put(bookEntry.getKey(), false);
