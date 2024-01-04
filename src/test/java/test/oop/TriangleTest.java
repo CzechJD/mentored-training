@@ -1,3 +1,5 @@
+package test.oop;
+
 import com.example.oop.Triangle;
 import org.junit.jupiter.api.Test;
 
