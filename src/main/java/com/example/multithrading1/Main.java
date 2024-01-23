@@ -3,7 +3,7 @@ package com.example.multithrading1;
 public class Main {
 
     public static void main(String[] args) {
-        testCounter(1_000_000);
+        testCounter(100);
     }
 
     private static void testCounter(int numOfThreads) {

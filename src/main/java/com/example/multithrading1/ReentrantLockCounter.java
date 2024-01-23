@@ -10,7 +10,11 @@ public class ReentrantLockCounter implements SiteVisitCounter {
     public void incrementVisitCount() {
         lock.lock();
         try {
+            Thread.sleep(100);
             count++;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
         } finally {
             lock.unlock();
         }

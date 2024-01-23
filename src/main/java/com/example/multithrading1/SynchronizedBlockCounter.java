@@ -2,17 +2,22 @@ package com.example.multithrading1;
 
 public class SynchronizedBlockCounter implements SiteVisitCounter {
     private int count;
-    private final Object object = new Object();
+    private final Object lock = new Object();
     @Override
     public void incrementVisitCount() {
-        synchronized (object) {
+        synchronized (lock) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             count++;
         }
     }
 
     @Override
     public int getVisitCount() {
-        synchronized (object) {
+        synchronized (lock) {
             return count;
         }
     }
