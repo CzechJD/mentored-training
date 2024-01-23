@@ -11,9 +11,14 @@ public class CalculateSumTask implements Callable<Integer> {
     private List<Integer> numbersList;
     private String taskName;
 
+    public CalculateSumTask(List<Integer> numbersList, String taskName) {
+        this.numbersList = numbersList;
+        this.taskName = taskName;
+    }
+
     @Override
     public Integer call() {
-        logger.info("Задача '{}' начата.", taskName);
+        logger.info("Задача '{}' начата в потоке '{}'.", taskName, Thread.currentThread().getName());
         int sum = 0;
 
         try {
@@ -22,16 +27,12 @@ public class CalculateSumTask implements Callable<Integer> {
                 Thread.sleep(200);
             }
         } catch (InterruptedException e) {
-            logger.error("Задача '{}' была прервана", taskName);
+            logger.error("Задача '{}' была прервана в потоке '{}'", taskName, Thread.currentThread().getName());
             Thread.currentThread().interrupt();
         }
 
-        logger.info("Задача '{}' завершена. Итоговая сумма: {}", taskName, sum);
+        logger.info("Задача '{}' завершена в потоке '{}'. Итоговая сумма: {}", taskName, Thread.currentThread().getName(), sum);
         return sum;
     }
 
-    public CalculateSumTask(List<Integer> numbersList, String taskName) {
-        this.numbersList = numbersList;
-        this.taskName = taskName;
-    }
 }

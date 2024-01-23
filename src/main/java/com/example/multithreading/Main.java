@@ -25,17 +25,11 @@ public class Main {
             logger.info("Активных задач осталось: '{}'", activeTask);
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
-                logger.error("Прервано ожиание завершения задач: ", e);
+                logger.error("Прервано ожидание завершения задач: ", e);
                 Thread.currentThread().interrupt();
             }
-        }
-
-        for (int i = 1; i <= 100; i++) {
-            String taskName = "task" + i;
-            Optional<Integer> result = processor.getResultTask(taskName);
-            result.ifPresent(value -> logger.info("Результат задачи '{}': '{}'", taskName, value));
         }
 
         processor.shutdown();

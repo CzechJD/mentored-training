@@ -16,21 +16,20 @@ public class DataProcessor {
     private AtomicInteger taskCounter = new AtomicInteger(0);
     private Map<String, Future<Integer>> taskResult = new HashMap<>();
 
+    public DataProcessor() {
+        executor = Executors.newFixedThreadPool(10);
+    }
 
-    public void shutdown() {
-        try {
-            executor.shutdown();
-            executor.awaitTermination(60, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            logger.error("Прерывание при ожидании задач.");
-            Thread.currentThread().interrupt();
-        } finally {
-            if (!executor.isTerminated()) {
-                logger.error("Отмена незавершённых задач.");
+    public int getActiveTaskCount() {
+        int activeCount = 0;
+        synchronized (taskResult) {
+            for (Future<Integer> future : taskResult.values()) {
+                if (!future.isDone()) {
+                    activeCount++;
+                }
             }
-            executor.shutdownNow();
-            logger.info("Пул завершён.");
         }
+        return activeCount;
     }
 
     public String submitCalculateSumTask(List<Integer> numbers) {
@@ -52,7 +51,7 @@ public class DataProcessor {
             future = taskResult.get(taskName);
         }
 
-        if (future == null) {
+        if (future == null && !future.isDone()) {
             return Optional.empty();
         }
 
@@ -65,22 +64,24 @@ public class DataProcessor {
         }
     }
 
-    public int getActiveTaskCount() {
-        if (executor instanceof ThreadPoolExecutor) {
-            return ((ThreadPoolExecutor) executor).getActiveCount();
+    private String generateTaskName() {
+        int taskNumber = taskCounter.incrementAndGet();
+        return "task" + taskNumber;
+    }
+
+    public void shutdown() {
+        try {
+            executor.shutdown();
+            executor.awaitTermination(60, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.error("Прерывание при ожидании задач.");
+            Thread.currentThread().interrupt();
+        } finally {
+            if (!executor.isTerminated()) {
+                logger.error("Отмена незавершённых задач.");
+            }
+            executor.shutdownNow();
+            logger.info("Пул завершён.");
         }
-        return -1;
-    }
-
-    public boolean isShutdown() {
-        return executor.isShutdown();
-    }
-
-    public boolean isTerminated() {
-        return executor.isTerminated();
-    }
-
-    public DataProcessor() {
-        executor = Executors.newFixedThreadPool(10);
     }
 }
